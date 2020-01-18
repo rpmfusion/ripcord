@@ -3,8 +3,8 @@
 
 Summary:        a lightweight chat client for Slack and Discord
 Name:           ripcord
-Version:        0.4.21
-Release:        4%{dist}
+Version:        0.4.22
+Release:        1%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
@@ -51,6 +51,9 @@ desktop-file-install                                                            
 %license redistribution.txt
 
 %changelog
+* Sat Jan 18 2020 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.22-1
+- Update to version 0.4.22
+
 * Wed Jan 01 2020 Jan Drogehoff <sentrycraft123@gmail.com> - 0.4.21-4
 - replace bin symlink with a wrapper to disable automatic updates
 
