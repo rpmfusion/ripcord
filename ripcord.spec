@@ -3,7 +3,7 @@
 
 Summary:        a lightweight chat client for Slack and Discord
 Name:           ripcord
-Version:        0.4.24
+Version:        0.4.25
 Release:        1%{dist}
 
 License:        Redistributable, no modification permitted
@@ -51,6 +51,9 @@ desktop-file-install                                                            
 %license redistribution.txt
 
 %changelog
+* Fri May 22 2020 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.25-1
+- Update to version 0.4.25
+
 * Sat Mar 14 2020 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.24-1
 - Update to version 0.4.24
 
