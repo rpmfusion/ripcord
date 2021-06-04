@@ -3,8 +3,8 @@
 
 Summary:        a lightweight chat client for Slack and Discord
 Name:           ripcord
-Version:        0.4.28
-Release:        2%{dist}
+Version:        0.4.29
+Release:        1%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
@@ -51,6 +51,9 @@ desktop-file-install                                                            
 %license redistribution.txt
 
 %changelog
+* Fri Jun 04 2021 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.29-1
+- Update to version 0.4.29
+
 * Wed Feb 03 2021 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.28-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
