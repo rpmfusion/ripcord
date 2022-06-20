@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>Ripcord.desktop</id>
+    <launchable type="desktop-id">Ripcord.desktop</launchable>
+    <name>Ripcord</name>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>LicenseRef-proprietary</project_license>
+    <summary>a lightweight chat client for Slack and Discord</summary>
+    <description>
+        <p>
+            Ripcord is a desktop chat client for group-centric services like Slack and Discord.
+            It provides a traditional compact desktop interface designed for power users.
+            It's not built on top of web browser technology: it has a small resource footprint,
+            responds quickly to input, and gets out of your way. Shareware is coming back, baby.
+        </p>
+    </description>
+    <screenshots>
+        <screenshot>
+            <image>https://cancel.fm/ripcord/static/ripcord_screenshot_win_6.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://cancel.fm/ripcord/static/ripcord_screenshot_win_5.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://cancel.fm/ripcord/static/ripcord_screenshot_win_7.png</image>
+        </screenshot>
+    </screenshots>
+    <url type="homepage">https://cancel.fm/ripcord/</url>
+    <url type="bugtracker">https://dev.cancel.fm/</url>
+    <developer_name>cancel</developer_name>
+</component>

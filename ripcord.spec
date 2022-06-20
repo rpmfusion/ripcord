@@ -4,23 +4,28 @@
 Summary:        a lightweight chat client for Slack and Discord
 Name:           ripcord
 Version:        0.4.29
-Release:        3%{dist}
+Release:        4%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
 Source0:        https://cancel.fm/dl/Ripcord-%{version}-x86_64.AppImage
-Source1:        redistribution.txt
+Source1:        ripcord.metainfo.xml
+Source2:        redistribution.txt
 ExclusiveArch:  x86_64
 
-BuildRequires:  desktop-file-utils
 BuildRequires:  chrpath
+BuildRequires:  desktop-file-utils
+BuildRequires:  libappstream-glib
 
 %description
-Ripcord is a proprietary shareware client for Slack and Discord
+Ripcord is a desktop chat client for group-centric services like Slack and Discord.
+It provides a traditional compact desktop interface designed for power users.
+It's not built on top of web browser technology: it has a small resource footprint,
+responds quickly to input, and gets out of your way. Shareware is coming back, baby.
 
 %prep
 %autosetup -c -T
-cp %{SOURCE1} .
+cp %{SOURCE2} .
 
 %build
 chmod +x %{SOURCE0}
@@ -29,7 +34,7 @@ chmod +x %{SOURCE0}
 %install
 mkdir -p %{buildroot}/%{_bindir}/
 mkdir -p %{buildroot}/%{_libdir}/ripcord/
-mkdir -p %{buildroot}/%{_datadir}/{applications,pixmaps}/
+mkdir -p %{buildroot}/%{_datadir}/{applications,pixmaps,metainfo}/
 cp -R squashfs-root/{Ripcord,translations,twemoji.ripdb} %{buildroot}/%{_libdir}/ripcord/
 chmod 0755 %{buildroot}/%{_libdir}/ripcord/translations/
 install -p -m 0644 squashfs-root/Ripcord_Icon.png %{buildroot}/%{_datadir}/pixmaps/
@@ -37,20 +42,29 @@ sed -i 's@libsodium.so.18@libsodium.so.23@' %{buildroot}/%{_libdir}/ripcord//Rip
 chrpath -d %{buildroot}/%{_libdir}/ripcord//Ripcord
 strip %{buildroot}/%{_libdir}/ripcord/Ripcord
 printf "#!/bin/bash\nenv RIPCORD_ALLOW_UPDATES=0 %{_libdir}/ripcord/Ripcord\n" > %{buildroot}/%{_bindir}/Ripcord
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/metainfo/ripcord.metainfo.xml
 
+%check
 desktop-file-install                                                                 \
  --set-key=Exec --set-value='env RIPCORD_ALLOW_UPDATES=0 %{_libdir}/ripcord/Ripcord' \
  --dir=%{buildroot}/%{_datadir}/applications                                         \
  squashfs-root/Ripcord.desktop
 
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/ripcord.metainfo.xml
+
+
 %files
 %attr(755, root, root) %{_bindir}/Ripcord
 %{_libdir}/ripcord/
 %{_datadir}/applications/Ripcord.desktop
+%{_metainfodir}/ripcord.metainfo.xml
 %{_datadir}/pixmaps/Ripcord_Icon.png
 %license redistribution.txt
 
 %changelog
+* Mon Jun 20 2022 Jan Drögehoff <sentrycraft123@gmail.com> - 0.4.29-4
+- add metainfo and missing dependency
+
 * Thu Feb 10 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.29-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
