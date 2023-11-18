@@ -4,7 +4,7 @@
 Summary:        a lightweight chat client for Slack and Discord
 Name:           ripcord
 Version:        0.4.29
-Release:        6%{dist}
+Release:        7%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
@@ -38,7 +38,11 @@ mkdir -p %{buildroot}/%{_datadir}/{applications,pixmaps,metainfo}/
 cp -R squashfs-root/{Ripcord,translations,twemoji.ripdb} %{buildroot}/%{_libdir}/ripcord/
 chmod 0755 %{buildroot}/%{_libdir}/ripcord/translations/
 install -p -m 0644 squashfs-root/Ripcord_Icon.png %{buildroot}/%{_datadir}/pixmaps/
+%if 0%{?fedora} && 0%{?fedora} > 39
+sed -i 's@libsodium.so.18@libsodium.so.26@' %{buildroot}/%{_libdir}/ripcord//Ripcord
+%else
 sed -i 's@libsodium.so.18@libsodium.so.23@' %{buildroot}/%{_libdir}/ripcord//Ripcord
+%endif
 chrpath -d %{buildroot}/%{_libdir}/ripcord//Ripcord
 strip %{buildroot}/%{_libdir}/ripcord/Ripcord
 printf "#!/bin/bash\nenv RIPCORD_ALLOW_UPDATES=0 %{_libdir}/ripcord/Ripcord\n" > %{buildroot}/%{_bindir}/Ripcord
@@ -62,6 +66,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/ripcord.metain
 %license redistribution.txt
 
 %changelog
+* Sat Nov 18 2023 Leigh Scott <leigh123linux@gmail.com> - 0.4.29-7
+- Fix build for f40+
+
 * Thu Aug 03 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.29-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
 
