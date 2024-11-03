@@ -1,15 +1,15 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
 
-Summary:        a lightweight chat client for Slack and Discord
+Summary:        Alternative desktop chat client for Slack (and Discord)
 Name:           ripcord
 Version:        0.4.29
-Release:        9%{dist}
+Release:        10%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
 Source0:        https://cancel.fm/dl/Ripcord-%{version}-x86_64.AppImage
-Source1:        ripcord.metainfo.xml
+Source1:        fm.cancel.Ripcord.metainfo.xml
 Source2:        redistribution.txt
 ExclusiveArch:  x86_64
 
@@ -18,10 +18,8 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
 %description
-Ripcord is a desktop chat client for group-centric services like Slack and Discord.
+Ripcord is a desktop chat client for services like Slack and Discord.
 It provides a traditional compact desktop interface designed for power users.
-It's not built on top of web browser technology: it has a small resource footprint,
-responds quickly to input, and gets out of your way. Shareware is coming back, baby.
 
 %prep
 %autosetup -c -T
@@ -46,26 +44,32 @@ sed -i 's@libsodium.so.18@libsodium.so.23@' %{buildroot}/%{_libdir}/ripcord//Rip
 chrpath -d %{buildroot}/%{_libdir}/ripcord//Ripcord
 strip %{buildroot}/%{_libdir}/ripcord/Ripcord
 printf "#!/bin/bash\nenv RIPCORD_ALLOW_UPDATES=0 %{_libdir}/ripcord/Ripcord\n" > %{buildroot}/%{_bindir}/Ripcord
-install -p -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/metainfo/ripcord.metainfo.xml
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/metainfo/fm.cancel.Ripcord.metainfo.xml
 
-%check
+# use reverse DNS for desktop file
+mv squashfs-root/Ripcord.desktop fm.cancel.Ripcord.desktop
+
 desktop-file-install                                                                 \
  --set-key=Exec --set-value='env RIPCORD_ALLOW_UPDATES=0 %{_libdir}/ripcord/Ripcord' \
  --dir=%{buildroot}/%{_datadir}/applications                                         \
- squashfs-root/Ripcord.desktop
+ fm.cancel.Ripcord.desktop
 
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/ripcord.metainfo.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/fm.cancel.Ripcord.metainfo.xml
 
 
 %files
 %attr(755, root, root) %{_bindir}/Ripcord
 %{_libdir}/ripcord/
-%{_datadir}/applications/Ripcord.desktop
-%{_metainfodir}/ripcord.metainfo.xml
+%{_datadir}/applications/fm.cancel.Ripcord.desktop
+%{_metainfodir}/fm.cancel.Ripcord.metainfo.xml
 %{_datadir}/pixmaps/Ripcord_Icon.png
 %license redistribution.txt
 
 %changelog
+* Sun Nov 03 2024 Jan200101 <sentrycraft123@gmail.com> - 0.4.29-10
+- Update metainfo and desktop file to use reverse DNS
+- Replace summary with text from website
+
 * Sat Aug 03 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.29-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
 
