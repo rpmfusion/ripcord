@@ -4,7 +4,7 @@
 Summary:        Alternative desktop chat client for Slack (and Discord)
 Name:           ripcord
 Version:        0.4.29
-Release:        10%{dist}
+Release:        11%{dist}
 
 License:        Redistributable, no modification permitted
 URL:            https://cancel.fm/ripcord
@@ -66,6 +66,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/fm.cancel.Ripc
 %license redistribution.txt
 
 %changelog
+* Wed Jan 29 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.29-11
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
+
 * Sun Nov 03 2024 Jan200101 <sentrycraft123@gmail.com> - 0.4.29-10
 - Update metainfo and desktop file to use reverse DNS
 - Replace summary with text from website
